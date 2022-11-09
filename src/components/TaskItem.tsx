@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../hook';
-import { removeTask, completeTask } from '../store/taskSlice';
+import { toggleTask, deleteTask } from '../store/taskSlice';
 
 interface TaskItemProps {
   item: {
@@ -18,7 +18,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ item }) => {
         <input
           type="checkbox"
           checked={item.completed}
-          onChange={() => dispatch(completeTask(item.id))}
+          onChange={() => dispatch(toggleTask(item.id))}
           className="form-check-input"
         />
         <p
@@ -29,7 +29,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ item }) => {
           {item.title}
         </p>
         <button
-          onClick={() => dispatch(removeTask(item.id))}
+          onClick={() => dispatch(deleteTask(item.id))}
           className="btn btn-sm btn-outline-danger lh-1"
         >
           rmv

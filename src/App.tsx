@@ -1,19 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CreateTask from './components/CreateTask';
 import TaskList from './components/TaskList';
-import { useAppDispatch } from './hook';
-import { addTask } from './store/taskSlice';
+import { useAppDispatch, useAppSelector } from './hook';
+import { fetchTasks, createTask } from './store/taskSlice';
 
 function App() {
   const [input, setInput] = useState('');
   const dispatch = useAppDispatch();
 
-  const createTask = () => {
+  const { loading, error } = useAppSelector((state) => state.tasks);
+
+  const addTask = () => {
     if (input.trim().length) {
-      dispatch(addTask(input));
+      dispatch(createTask(input));
       setInput('');
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchTasks());
+  }, []);
 
   return (
     <div className="App">
@@ -21,10 +27,12 @@ function App() {
         <div className="row justify-content-center">
           <div className="col-sm-12 col-md-10 col-lg-8">
             <CreateTask
-              submitHandler={createTask}
+              submitHandler={addTask}
               input={input}
               setInput={setInput}
             />
+            {loading && <h3 className="py-5">Загрузка...</h3>}
+            {error && <h3 className="py-5">Error: {error}</h3>}
             <TaskList />
           </div>
         </div>
