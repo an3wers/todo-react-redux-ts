@@ -4,16 +4,13 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import taskReducer from "./store/taskSlice";
+import { rootReducer } from "./store";
 
 interface Props {
   path: string;
 }
 
-const store = configureStore({
-  reducer: {
-    tasks: taskReducer,
-  },
-});
+const store = configureStore({ reducer: rootReducer});
 
 export const render = ({ path }: Props) => {
   return renderToString(

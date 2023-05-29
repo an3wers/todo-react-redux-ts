@@ -15,6 +15,7 @@ type TasksState = {
   list: Task[];
   loading: boolean;
   error: string | null;
+  testList: any[]
 };
 
 // fetch tasks
@@ -132,6 +133,7 @@ const initialState: TasksState = {
   list: [],
   loading: false,
   error: null,
+  testList: ['123', '456', '789']
 };
 
 const taskSlice = createSlice({
