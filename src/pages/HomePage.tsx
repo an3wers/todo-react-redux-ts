@@ -9,7 +9,7 @@ const HomePage = () => {
   const [input, setInput] = useState("");
   const dispatch = useAppDispatch();
 
-  const { loading, error } = useAppSelector((state) => state.tasks);
+  const { loading, error, list } = useAppSelector((state) => state.tasks);
 
   const addTask = () => {
     if (input.trim().length) {
@@ -19,7 +19,10 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchTasks());
+    // very simple check
+    if(!list.length) {
+      dispatch(fetchTasks());
+    }
   }, []);
 
   return (

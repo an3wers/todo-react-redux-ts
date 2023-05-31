@@ -42,15 +42,14 @@ const createServer = async () => {
         render = (await import("./dist/server/entry-server.js")).render;
       }
 
-      // const response = await fetch(`https://rickandmortyapi.com/api/character`)
-      // const result = await response.json()
+      const [appHtml, store] = await render({ path: url });
+      const data = `<script>window.__SSR_DATA__=${JSON.stringify(
+        store.getState()
+      )}</script>`;
 
-      const appHtml = await render({ path: url });
-      // const data = `<script>window.__SSR_DATA__=${JSON.stringify(
-      //   result.results
-      // )}</script>`
-
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml);
+      const html = template
+        .replace(`<!--ssr-outlet-->`, appHtml)
+        .replace(`<!--ssr-state-->`, data);
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (error) {
       if (process.env.NODE_ENV === "development") {

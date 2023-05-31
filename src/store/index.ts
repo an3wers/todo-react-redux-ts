@@ -5,9 +5,14 @@ export const rootReducer = {
   tasks: taskReducer,
 };
 
-const store = configureStore({
-  reducer: rootReducer,
-});
+const store = create();
+
+export function create(initialState?: any) {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState: initialState
+  });
+}
 
 export default store;
 
