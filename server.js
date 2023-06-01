@@ -6,7 +6,9 @@ const createServer = async () => {
   const app = express();
   let vite;
 
-  if (process.env.NODE_ENV === "development") {
+  const isDev = process.env.NODE_ENV !== 'production'
+ 
+  if (isDev) {
     vite = await (
       await import("vite")
     ).createServer({
@@ -28,11 +30,10 @@ const createServer = async () => {
     let template, render;
 
     try {
-      if (process.env.NODE_ENV === "development") {
+      if (isDev) {
+        console.log(123123)
         template = fs.readFileSync(path.resolve("./index.html"), "utf-8");
-
         template = await vite.transformIndexHtml(url, template);
-
         render = (await vite.ssrLoadModule("/src/entry-server.tsx")).render;
       } else {
         template = fs.readFileSync(
@@ -52,7 +53,7 @@ const createServer = async () => {
         .replace(`<!--ssr-state-->`, data);
       res.status(200).set({ "Content-Type": "text/html" }).end(html);
     } catch (error) {
-      if (process.env.NODE_ENV === "development") {
+      if (isDev) {
         vite.ssrFixStacktrace(error);
       }
       next(error);
