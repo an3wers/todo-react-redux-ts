@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:ssr": "set NODE_ENV=development && node server.js",
+    "dev:ssr": "NODE_ENV=development node server.js",
     "build": "rimraf ./dist && yarn build:client && yarn build:server",
-    "build:client": "tsc vite build --config vite.config.ts",
-    "build:server": "tsc vite build --config ssr.config.ts",
-    "prod": "set NODE_ENV=production && node server.js"
+    "build:client": "vite build --config vite.config.ts",
+    "build:server": "vite build --config ssr.config.ts",
+    "prod": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",

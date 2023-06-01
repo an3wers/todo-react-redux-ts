@@ -15,7 +15,6 @@ export default defineConfig({
       input: "src/entry-server.tsx",
       output: {
         dir: "dist/server",
-        // format: "",
       },
     },
   },
